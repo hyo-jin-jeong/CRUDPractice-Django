@@ -42,12 +42,16 @@ class NewDogsView(View):
 class OwnerListView(View):
     def get(self, request):
         owners = Owner.objects.all()
-
         result = []
+        # owner객체 하나씩 가져오기
         for owner in owners:
-            result.append({'name' :owner.name, 'email' :owner.email, 'age':owner.age})
-        # result = json.dumps(result)
-
+            dogs = {}
+            dog_objects = owner.dog.all()
+            #owner에 해당하는 dog값 가져오기 
+            for dog in dog_objects:
+               dogs[dog.id] = {'name':dog.name, 'age':dog.age} 
+            result.append({'name' :owner.name, 'email' :owner.email, 'age':owner.age, 'dogs':dogs})
+        
         return JsonResponse({'result':result}, status=200)
 
 class DogListView(View):
