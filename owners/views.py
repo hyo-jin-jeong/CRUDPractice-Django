@@ -49,3 +49,13 @@ class OwnerListView(View):
         # result = json.dumps(result)
 
         return JsonResponse({'result':result}, status=200)
+
+class DogListView(View):
+    def get(self, request):
+        dogs = Dog.objects.all()
+        owners = Owner.objects.all()
+        result = []
+        for dog in dogs:
+            result.append({'name':dog.name, 'age':dog.age, 'owner_name':owners.get(id=dog.owner_id).name}) 
+
+        return JsonResponse({'result':result}, status=200)
