@@ -6,7 +6,7 @@ from django.db.models.fields import CharField
 
 class Owner(models.Model):
     name = models.CharField(max_length=45)
-    email = models.CharField(max_lenght=300)
+    email = models.CharField(max_length=300)
     age = models.IntegerField()
 
     class Meta:
@@ -20,4 +20,3 @@ class Dog(models.Model):
     class Meta:
         db_table = "dogs"
 
-        
