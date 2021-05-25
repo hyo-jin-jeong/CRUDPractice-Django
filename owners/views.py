@@ -37,3 +37,15 @@ class NewDogsView(View):
             return JsonResponse({'message' : 'SUCCESS!'}, status=201)
         except KeyError:
             return JsonResponse({'message' : 'INVALID_KEY'}, status=400)
+
+
+class OwnerListView(View):
+    def get(self, request):
+        owners = Owner.objects.all()
+
+        result = []
+        for owner in owners:
+            result.append({'name' :owner.name, 'email' :owner.email, 'age':owner.age})
+        # result = json.dumps(result)
+
+        return JsonResponse({'result':result}, status=200)
