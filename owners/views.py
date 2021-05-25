@@ -35,6 +35,7 @@ class NewDogsView(View):
             Dog.objects.create(owner = owner, name=name, age=age)
 
             return JsonResponse({'message' : 'SUCCESS!'}, status=201)
+
         except KeyError:
             return JsonResponse({'message' : 'INVALID_KEY'}, status=400)
 
@@ -60,6 +61,6 @@ class DogListView(View):
         owners = Owner.objects.all()
         result = []
         for dog in dogs:
-            result.append({'name':dog.name, 'age':dog.age, 'owner_name':owners.get(id=dog.owner_id).name}) 
+            result.append({'name':dog.name, 'age':dog.age, 'owner_name':owners.get(id=dog.owner.id).name}) 
 
         return JsonResponse({'result':result}, status=200)
