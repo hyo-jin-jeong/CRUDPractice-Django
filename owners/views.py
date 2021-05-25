@@ -20,3 +20,20 @@ class NewOwnersView(View):
 
         except KeyError:
             return JsonResponse({'message':'INVALID_KEY'}, status=400)
+
+
+class NewDogsView(View):
+    def post(self, request):
+        try:
+            data = json.loads(request.body)
+
+            owner_email = data['owner_email']
+            name = data['name']
+            age = data['age']
+
+            owner = Owner.objects.get(email = owner_email)
+            Dog.objects.create(owner = owner, name=name, age=age)
+
+            return JsonResponse({'message' : 'SUCCESS!'}, status=201)
+        except KeyError:
+            return JsonResponse({'message' : 'INVALID_KEY'}, status=400)
