@@ -8,5 +8,7 @@ from .models import *
 class MovieListView(View):
     pass
 class ActorListView(View):
-    pass
+    def get(self, request):
+        pass
+        
 
