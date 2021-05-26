@@ -18,3 +18,4 @@ class Actor(models.Model):
 
     class Meta:
         db_table='actors'
+        
