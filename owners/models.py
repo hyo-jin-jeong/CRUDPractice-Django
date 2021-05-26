@@ -1,12 +1,11 @@
 from django.db import models
 from django.db.models.deletion import CASCADE
-from django.db.models.fields import CharField
 
 # Create your models here.
 
 class Owner(models.Model):
     name = models.CharField(max_length=45)
-    email = models.CharField(max_length=300)
+    email = models.EmailField(max_length=300)
     age = models.IntegerField()
 
     class Meta:

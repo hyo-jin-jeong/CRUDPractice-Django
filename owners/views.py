@@ -1,5 +1,4 @@
 import json
-
 from django.views import View
 from django.http import JsonResponse
 from .models import Owner, Dog
@@ -38,7 +37,9 @@ class NewDogsView(View):
 
         except KeyError:
             return JsonResponse({'message' : 'INVALID_KEY'}, status=400)
-
+        
+        except Owner.DoesNotExist:
+            return JsonResponse({"message":'USER DOES NOT EXIST'}, status=404)
 
 class OwnerListView(View):
     def get(self, request):
@@ -61,6 +62,6 @@ class DogListView(View):
         owners = Owner.objects.all()
         result = []
         for dog in dogs:
-            result.append({'name':dog.name, 'age':dog.age, 'owner_name':owners.get(id=dog.owner.id).name}) 
+            result.append({'name':dog.name, 'age':dog.age, 'owner_name':dog.owner.name}) 
 
         return JsonResponse({'result':result}, status=200)
