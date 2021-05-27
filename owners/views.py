@@ -9,9 +9,9 @@ class NewOwnersView(View):
         try:
             data = json.loads(request.body)
 
-            name = data['name']
+            name  = data['name']
             email = data['email']
-            age = data['age']
+            age   = data['age']
 
             Owner.objects.create(name=name, email=email, age=age)
 
@@ -28,7 +28,7 @@ class NewDogsView(View):
 
             owner_email = data['owner_email']
             name = data['name']
-            age = data['age']
+            age  = data['age']
 
             owner = Owner.objects.get(email = owner_email)
             Dog.objects.create(owner = owner, name=name, age=age)
@@ -46,20 +46,30 @@ class OwnerListView(View):
         owners = Owner.objects.all()
         result = []
         for owner in owners:
-            dogs = {}
             dog_objects = owner.dog.all()
-            for dog in dog_objects:
-               dogs[dog.id] = {'name':dog.name, 'age':dog.age} 
-            result.append({'name' :owner.name, 'email' :owner.email, 'age':owner.age, 'dogs':dogs})
+            dogs = [{
+                'name':dog.name, 
+                'age':dog.age
+            }for dog in dog_objects]
+            owner_list = {
+                'name' : owner.name,
+                'email': owner.email,
+                'age'  : owner.age,
+                'dogs' : dogs
+            }
+            result.append(owner_list)
         
         return JsonResponse({'result':result}, status=200)
 
 class DogListView(View):
     def get(self, request):
         dogs = Dog.objects.all()
-        owners = Owner.objects.all()
         result = []
         for dog in dogs:
-            result.append({'name':dog.name, 'age':dog.age, 'owner_name':dog.owner.name}) 
-
+            dog_info = {
+                'name':dog.name,
+                'age':dog.age,
+                'owner_name':dog.owner.name
+            }
+            result.append(dog_info)
         return JsonResponse({'result':result}, status=200)
