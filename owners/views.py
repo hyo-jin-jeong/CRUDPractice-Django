@@ -49,7 +49,7 @@ class OwnerListView(View):
             dog_objects = owner.dog.all()
             dogs = [{
                 'name':dog.name, 
-                'age':dog.age
+                'age' :dog.age
             }for dog in dog_objects]
             owner_list = {
                 'name' : owner.name,
@@ -68,7 +68,7 @@ class DogListView(View):
         for dog in dogs:
             dog_info = {
                 'name':dog.name,
-                'age':dog.age,
+                'age' :dog.age,
                 'owner_name':dog.owner.name
             }
             result.append(dog_info)
